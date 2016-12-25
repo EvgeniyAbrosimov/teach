@@ -1,7 +1,4 @@
-from django.conf.urls import include, url
-from django.contrib import admin
+from django.shortcuts import render
 
-urlpatterns = [
-   # url(r'^admin/', admin.site.urls),
-   # url(r'', include('product.urls')),
-]
+def home(request):
+    return render(request, 'product/main.html')
