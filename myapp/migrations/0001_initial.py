@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
                 ('image', models.TextField()),
                 ('page', models.TextField()),
                 ('price', models.IntegerField()),
-                ('brand', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='product.Brand')),
+                ('brand', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='myapp.Brand')),
             ],
         ),
     ]
