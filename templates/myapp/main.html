@@ -3,11 +3,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
  <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Видеокамеры для всех</title>
+  <title>Видеокамеры все</title>
   <style type="text/css">
    body {
     font: 10pt Arial, Helvetica, sans-serif; /* Шрифт на веб-странице */
-    background: #54463d; /* Цвет фона */
+    background: #54863d; /* Цвет фона */
     margin: 0; /* Убираем отступы */
    }
    #container {
@@ -15,7 +15,7 @@
     margin: 0 auto; /* Выравниваем по центру */
    }
    #header {
-    background: #8fa09b; /* Цвет фона */
+    background: #1fa09b; /* Цвет фона */
     font-size: 20pt; /* Размер текста */
     color: #edeed5; /* Цвет текста */
     padding: 15px; /* Отступы вокруг текста */
@@ -37,7 +37,7 @@
     float: right; /* Обтекание по левому краю */
     width: 17%; /* Ширина правой колонки */
     padding: 10px; /* Отступы вокруг текста */
-    background: #cbc0b7; /* Цвет фона */
+    background: #cbf0b7; /* Цвет фона */
     font-size: 12pt;
    }
    #footer {
@@ -50,7 +50,7 @@
  </head>
  <body>
   <div id="container">
-   <div id="header">Видеокамеры для всех</div>
+   <div id="header">Видеокамеры все</div>
    <div id="sidebar">
           <fieldset class = "db_update">
            <legend style="text-align: center">Обновить БД</legend>
@@ -61,11 +61,61 @@
            </a>
        </fieldset><br/>
        <fieldset class="right_panel">
-
+           <legend align="center" style="font-size: 125%">Выберите параметры:</legend>
+           {# форма отправки (методом POST) значений фильтров, заданных пользователем #}
+           <form method="POST">{% csrf_token %}
+               {# фильтр выборки товаров по бренду #}
+               <fieldset class="blockparam">
+                   <legend>Бренд</legend>
+                   {# скрипт обработки выбора элементов "radio" #}
+                   <script type="text/javascript">
+                       var a,b;
+                       function IScheck(c) {
+                           if (a != c) {b = 0;a = c};
+                           b ^= 1;
+                           c.checked = b};
+                   </script>
+                   {# цикл формирование элементов фильтра #}
+                   {% for brand in brands %}
+                       <label>
+                           <input type="radio" name="brand_checkbox" value="{{ brand.name }}" onclick="IScheck(this)">
+                       </label>
+                       <label for="checkbox">{{ brand.name }}</label>
+                       <br/>
+                   {% endfor %}
+               </fieldset><br>
+                   {# кнопка отправки формы, со значениями элементов управления #}
+                   <button type="submit" style="font-weight: bold">Поиск!</button>
+               </div>
+           </form>
        </fieldset>
    </div>
    <div id="content">
-
+       {# Таблица вывода результатов выборки даных из БД #}
+       <table width="auto" border="1" class="products" align="center">
+           <tbody>
+           <tr>
+               {# заголовки таблицы #}
+               <th scope="col">Изображение:</th>
+               <th scope="col">Наиименование товара:</th>
+               <th scope="col">Описание товара:</th>
+               <th scope="col">Производитель:</th>
+               <th scope="col">Цена:</th>
+               <th scope="col">Купить:</th>
+           </tr>
+           {# цикл заполнения строк таблицы, данными #}
+           {% for image, name, brand, price, page, description in chosen_cameras %}
+               <tr>
+                   <td align="center"><img src={{ image }}></td>
+                   <td style="text-align: center">{{ name }}</td>
+                   <td style="text-align: justify">&emsp;{{ description }}</td>
+                   <td align="center">{{ brand }}</td>
+                   <td align="center" style="font-weight: bold">&nbsp;{{ price }}&nbsp;руб.&nbsp;</td>
+                   <td align="center">
+                   </tr>
+           {% endfor %}
+           </tbody>
+       </table>
    </div>
    <div id="footer">&copy; Все права защищены. Автор: студент группы АСУ-13бз
        Абросимов Евгений Александрович.</div>
