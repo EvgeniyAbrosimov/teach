@@ -55,14 +55,15 @@ def main(request):
     chosen_cameras = []
     # запрос выборки видеокамер из БД, по условию
     for cam in Camera.objects.raw('''SELECT myapp_camera.id,
-            myapp_camera.name AS name,
-            myapp_brand.name AS prod_brand,
-            myapp_camera.description AS description,
-            myapp_camera.page AS page,
-            myapp_camera.price AS price
-            FROM myapp_camera
-            JOIN myapp_brand ON myapp_camera.brand_id = myapp_brand.id
-            WHERE ''' + where_predict +
+        myapp_camera.name AS name,
+        myapp_camera.image AS image,
+        myapp_brand.name AS prod_brand,
+        myapp_camera.description AS description,
+        myapp_camera.page AS page,
+        myapp_camera.price AS price
+        FROM myapp_camera
+        JOIN myapp_brand ON myapp_camera.brand_id = myapp_brand.id
+        WHERE ''' + where_predict +
                                           ''' ORDER BY price'''):
         chosen_cameras.append([cam.image,
                                cam.name,

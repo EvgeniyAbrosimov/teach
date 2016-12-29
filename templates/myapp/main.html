@@ -84,6 +84,17 @@
                        <br/>
                    {% endfor %}
                </fieldset><br>
+               {# фильтр выборки товаров по цене #}
+               <fieldset class="blockparam">
+                   <legend>Цена</legend>
+                   <label>
+                       от: <input type="text" placeholder="от" name="price_min" value="0" style="width: 60px">
+                       до: <input type="text" placeholder="до" name="price_max" value="{{ max_price }}" style="width: 60px">
+                       <br/>
+                       *введите интервал цен
+                   </label>
+               </fieldset>&nbsp;
+               <div align="center">
                    {# кнопка отправки формы, со значениями элементов управления #}
                    <button type="submit" style="font-weight: bold">Поиск!</button>
                </div>
@@ -99,7 +110,7 @@
                <th scope="col">Изображение:</th>
                <th scope="col">Наиименование товара:</th>
                <th scope="col">Описание товара:</th>
-               <th scope="col">Производитель:</th>
+               <th scope="col">Производитель товара:</th>
                <th scope="col">Цена:</th>
                <th scope="col">Купить:</th>
            </tr>
@@ -112,7 +123,11 @@
                    <td align="center">{{ brand }}</td>
                    <td align="center" style="font-weight: bold">&nbsp;{{ price }}&nbsp;руб.&nbsp;</td>
                    <td align="center">
-                   </tr>
+                       <a href="{{ page }}" target="_blank">
+                           <button style="white-space: nowrap; height: 30pt">Перейти в магазин</button>
+                       </a>
+                   </td>
+               </tr>
            {% endfor %}
            </tbody>
        </table>
